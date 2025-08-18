@@ -1,0 +1,7 @@
+<aspectj>
+    <weaver options="-warn:none -Xlint:ignore"/>
+    <aspects>
+        <aspect name="com.example.autotest.test.aspect.AioStepAspect"/>
+        <aspect name="com.example.autotest.test.aspect.ComponentNameAspect"/>
+    </aspects>
+</aspectj>

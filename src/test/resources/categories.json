@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Успешные тесты",
+    "matchedStatuses": ["passed"]
+  },
+  {
+    "name": "Пропущенные тесты",
+    "matchedStatuses": ["skipped"]
+  },
+  {
+    "name": "Сломанные тесты",
+    "matchedStatuses": ["broken"]
+  },
+  {
+    "name": "Упавшие тесты",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Неопределенный результат",
+    "matchedStatuses": ["unknown"]
+  },
+  {
+    "name": "Нестабильные тесты",
+    "flaky": true
+  }
+]
