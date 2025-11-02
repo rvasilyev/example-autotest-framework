@@ -1,15 +1,14 @@
 package com.example.autotest.backend.rest.jira.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class JiraUserDto implements Serializable {
+public class JiraUserDto {
 
     private String self;
     private String key;
     private String name;
     private String emailAddress;
-    private transient Object avatarUrls;
+    private Object avatarUrls;
     private String displayName;
     private Boolean active;
     private Boolean deleted;

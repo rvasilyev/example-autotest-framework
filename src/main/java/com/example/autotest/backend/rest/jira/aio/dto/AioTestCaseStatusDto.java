@@ -3,10 +3,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 import com.example.autotest.backend.rest.jira.aio.type.AioTestStatusType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioTestCaseStatusDto implements Serializable {
+public class AioTestCaseStatusDto {
 
     private Integer id;
     private String name;
@@ -18,7 +17,7 @@ public class AioTestCaseStatusDto implements Serializable {
     private Boolean isVisibleToEveryone;
     private Boolean canBeAddedAsRefStep;
     private Long updatedDate;
-    private transient Object deletionStatus;
+    private Object deletionStatus;
     private AioTestStatusType testStatusType;
 
     @JsonProperty("ID")

@@ -77,6 +77,9 @@ public final class AioService extends AbstractRestService {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
         AioService that = (AioService) o;
 
         return caseOperationsController.equals(that.caseOperationsController)

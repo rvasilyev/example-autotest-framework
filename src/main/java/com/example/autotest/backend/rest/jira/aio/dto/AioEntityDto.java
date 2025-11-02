@@ -3,10 +3,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 import com.example.autotest.backend.rest.jira.aio.type.AioEntityType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioEntityDto implements Serializable {
+public class AioEntityDto {
 
     private Integer id;
     private String name;

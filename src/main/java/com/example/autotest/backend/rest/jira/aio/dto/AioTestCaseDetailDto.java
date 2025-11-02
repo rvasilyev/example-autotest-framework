@@ -2,12 +2,11 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AioTestCaseDetailDto implements Serializable {
+public class AioTestCaseDetailDto {
 
     private String key;
     private String title;
@@ -29,7 +28,7 @@ public class AioTestCaseDetailDto implements Serializable {
     private Integer estimatedEffort;
     private List<AioTagWrapperDto> tags = Collections.emptyList();
     private List<AioRequirementDto> requirements = Collections.emptyList();
-    private transient Object customFieldValues = new Object(); // при null получаем ошибку 500 и некорректный ответ, но кейс создается
+    private Object customFieldValues = new Object(); // при null получаем ошибку 500 и некорректный ответ, но кейс создается
 
     public String getKey() {
         return key;

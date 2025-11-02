@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import com.example.autotest.support.frontend.WebElementUtils;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public abstract class AbstractWebElement implements CustomWebElement {
 
@@ -38,8 +37,7 @@ public abstract class AbstractWebElement implements CustomWebElement {
 
         String nameRef = name.trim();
         if (!nameRef.isEmpty()) {
-            Pattern pattern = Pattern.compile("^([a-z])+", Pattern.CANON_EQ);
-            if (nameRef.matches(pattern.toString())) {
+            if (nameRef.matches("^([a-z])+")) {
                 String firstChar = String.valueOf(nameRef.charAt(0));
                 nameRef = nameRef.replaceFirst(firstChar, firstChar.toUpperCase());
             }

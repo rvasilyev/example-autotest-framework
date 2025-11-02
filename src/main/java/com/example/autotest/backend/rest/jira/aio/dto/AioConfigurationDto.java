@@ -2,12 +2,11 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AioConfigurationDto implements Serializable {
+public class AioConfigurationDto {
 
     private Integer jiraProjectId;
     private String headwayKey;
@@ -19,12 +18,12 @@ public class AioConfigurationDto implements Serializable {
     private List<AioTestRunStepStatusDto> testRunStepStatus = Collections.emptyList();
     private List<AioTestCaseAutomationStatusDto> testAutomationStatus = Collections.emptyList();
     private List<AioTestCaseScriptTypeDto> testScriptType = Collections.emptyList();
-    private transient List<Object> customFields = Collections.emptyList();
+    private List<Object> customFields = Collections.emptyList();
     private List<AioCustomFieldTypeDto> customFieldTypes = Collections.emptyList();
     private List<AioCustomFieldJiraTypeDto> customFieldJiraTypes = Collections.emptyList();
     private List<AioFieldDto> disabledFields = Collections.emptyList();
     private List<AioFieldDto> requiredFields = Collections.emptyList();
-    private transient Object userEmailPreferences = new Object();
+    private Object userEmailPreferences = new Object();
 
     @JsonProperty("jiraProjectID")
     public Integer getJiraProjectId() {

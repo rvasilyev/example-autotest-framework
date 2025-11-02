@@ -2,15 +2,14 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.example.autotest.backend.rest.jira.aio.type.AioCustomFieldJiraType;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AioCustomFieldJiraTypeDto implements Serializable {
+public class AioCustomFieldJiraTypeDto {
 
     private AioCustomFieldJiraType type;
-    private transient Object jiraFixedTypes;
+    private Object jiraFixedTypes;
     private List<String> jiraCustomSchemaTypes = Collections.emptyList();
     private List<String> jiraUserCustomTypes = Collections.emptyList();
 

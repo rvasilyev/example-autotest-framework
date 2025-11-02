@@ -1,6 +1,5 @@
 package com.example.autotest.backend.rest.jira.aio.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Objects;
  *     <li>0 - нет доступа</li>
  * </ul>
  */
-public class AioPermissionDto implements Serializable {
+public class AioPermissionDto {
 
     private Integer value;
     private String error;

@@ -3,10 +3,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 import com.example.autotest.backend.rest.jira.aio.type.AioConfigurableField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioFieldDto implements Serializable {
+public class AioFieldDto {
 
     private Integer id;
     private Integer projectId;

@@ -2,10 +2,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioFolderDto implements Serializable {
+public class AioFolderDto {
 
     private Integer id;
     private String name;

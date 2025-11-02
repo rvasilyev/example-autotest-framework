@@ -141,7 +141,7 @@ public final class AioStepAspect {
         RequestLine requestLineAnnotation = AnnotationUtils.getAnnotation(stepMethod, RequestLine.class);
         List<Parameter> parameters = Arrays.stream(stepMethod.getParameters())
                 .filter(parameter -> AnnotationUtils.getAnnotation(parameter, AioIgnoredParam.class) == null)
-                .toList();
+                .collect(Collectors.toList());
         for (int i = 0; i < parameters.size(); i++) {
             Parameter parameter = parameters.get(i);
             Object paramValue = paramValues[i];

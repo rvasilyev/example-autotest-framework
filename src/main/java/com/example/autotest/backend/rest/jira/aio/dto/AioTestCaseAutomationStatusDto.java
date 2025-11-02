@@ -3,10 +3,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 import com.example.autotest.backend.rest.jira.aio.type.AioTestAutomationStatusType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioTestCaseAutomationStatusDto implements Serializable {
+public class AioTestCaseAutomationStatusDto {
 
     private Integer id;
     private String name;

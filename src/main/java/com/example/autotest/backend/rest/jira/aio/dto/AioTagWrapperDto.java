@@ -1,9 +1,8 @@
 package com.example.autotest.backend.rest.jira.aio.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioTagWrapperDto implements Serializable {
+public class AioTagWrapperDto {
 
     private AioTagDto tag;
 

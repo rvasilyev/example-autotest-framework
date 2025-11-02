@@ -40,6 +40,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Component
 @Lazy
@@ -105,7 +106,7 @@ public final class AioExtension implements AfterTestExecutionCallback {
                 .map(issue -> RestUtils.checkResponseAndGetBody(jiraService.getIssuesController().getIssue(issue.value(), null))
                         .getId()
                 )
-                .toList();
+                .collect(Collectors.toList());
         List<String> requirementIds = new ArrayList<>();
         requirementIds.addAll(collectingIdsFunction.apply(context.getRequiredTestMethod()));
         requirementIds.addAll(collectingIdsFunction.apply(context.getRequiredTestClass()));
@@ -230,7 +231,7 @@ public final class AioExtension implements AfterTestExecutionCallback {
             return existingTags.stream()
                     .filter(tag -> tags.contains(tag.getName()))
                     .map(tag -> new AioTagWrapperDto().setTag(tag))
-                    .toList();
+                    .collect(Collectors.toList());
         } else {
             throw createAioException(String.format("в проекте с id %s не найдены теги %s", jiraProjectId, missingTags)).get();
         }

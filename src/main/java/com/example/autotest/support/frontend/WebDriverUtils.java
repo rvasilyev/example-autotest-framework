@@ -92,23 +92,25 @@ public final class WebDriverUtils {
      * Закрывает используемый экземпляр веб-драйвера, если он запущен, иначе не делает ничего.
      */
     public static void closeWebDriver() {
-        WebDriverRunner.closeWebDriver();
-        LOG.info("Веб-драйвер остановлен");
+        try {
+            WebDriverRunner.closeWebDriver();
+            LOG.info("Веб-драйвер остановлен");
 
-        Consumer<? super GenericContainer<?>> containerConsumer = container -> {
-            container.stop();
-            container.close();
-            if (container instanceof BrowserWebDriverContainer) {
-                LOG.info("Остановлен Docker-контейнер для веб-драйвера");
-            }
-        };
-        Optional.ofNullable(localWebDriverContainer.get()).ifPresent(containerConsumer);
-        Optional.ofNullable(localSocatContainer.get()).ifPresent(containerConsumer);
-        Optional.ofNullable(localNetwork.get()).ifPresent(Network::close);
-
-        localWebDriverContainer.remove();
-        localSocatContainer.remove();
-        localNetwork.remove();
+            Consumer<? super GenericContainer<?>> containerConsumer = container -> {
+                container.stop();
+                container.close();
+                if (container instanceof BrowserWebDriverContainer) {
+                    LOG.info("Остановлен Docker-контейнер для веб-драйвера");
+                }
+            };
+            Optional.ofNullable(localWebDriverContainer.get()).ifPresent(containerConsumer);
+            Optional.ofNullable(localSocatContainer.get()).ifPresent(containerConsumer);
+            Optional.ofNullable(localNetwork.get()).ifPresent(Network::close);
+        } finally {
+            localWebDriverContainer.remove();
+            localSocatContainer.remove();
+            localNetwork.remove();
+        }
     }
 
     /**

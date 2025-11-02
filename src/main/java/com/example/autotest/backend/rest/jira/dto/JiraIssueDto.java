@@ -1,15 +1,14 @@
 package com.example.autotest.backend.rest.jira.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class JiraIssueDto implements Serializable {
+public class JiraIssueDto {
 
     private String expand;
     private String id;
     private String self;
     private String key;
-    private transient Object fields;
+    private Object fields;
 
     public String getExpand() {
         return expand;

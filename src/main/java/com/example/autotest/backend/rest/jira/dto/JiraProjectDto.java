@@ -1,11 +1,10 @@
 package com.example.autotest.backend.rest.jira.dto;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class JiraProjectDto implements Serializable {
+public class JiraProjectDto {
 
     private String expand;
     private String self;
@@ -13,14 +12,14 @@ public class JiraProjectDto implements Serializable {
     private String key;
     private String name;
     private String description;
-    private transient Object lead;
-    private transient List<Object> components = Collections.emptyList();
-    private transient List<Object> issueTypes = Collections.emptyList();
+    private Object lead;
+    private List<Object> components = Collections.emptyList();
+    private List<Object> issueTypes = Collections.emptyList();
     private String assigneeType;
-    private transient List<Object> versions = Collections.emptyList();
-    private transient Object roles;
-    private transient Object avatarUrls;
-    private transient Object projectCategory;
+    private List<Object> versions = Collections.emptyList();
+    private Object roles;
+    private Object avatarUrls;
+    private Object projectCategory;
     private String projectTypeKey;
     private Boolean archived;
 

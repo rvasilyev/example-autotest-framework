@@ -2,10 +2,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioTagDto implements Serializable {
+public class AioTagDto {
 
     private Integer id;
     private String name;

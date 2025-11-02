@@ -2,10 +2,9 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioTestCasePriorityDto implements Serializable {
+public class AioTestCasePriorityDto {
 
     private Integer id;
     private String name;
@@ -13,7 +12,7 @@ public class AioTestCasePriorityDto implements Serializable {
     private Long createdDate;
     private Long updatedDate;
     private Boolean isArchived;
-    private transient Object deletionStatus;
+    private Object deletionStatus;
 
     @JsonProperty("ID")
     public Integer getId() {

@@ -9,6 +9,7 @@ import com.example.autotest.frontend.element.common.option.SelectableOption;
 import com.example.autotest.support.frontend.WebElementUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface Dropbox<T extends SelectableOption> extends OptionContainer<T>, ClickableWebElement, LockableWebElement {
 
@@ -31,13 +32,13 @@ public interface Dropbox<T extends SelectableOption> extends OptionContainer<T>,
     default List<T> getSelectedOptions() {
         return getOptions().stream()
                 .filter(SelectableWebElement::isSelected)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     default List<T> getValidOptions() {
         return getOptions().stream()
                 .filter(SelectableOption::isValid)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     default boolean hasSelectedOptions() {

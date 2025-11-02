@@ -2,13 +2,12 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 
-public class AioTestCaseDto implements Serializable {
+public class AioTestCaseDto {
 
     private Integer id;
     private Integer jiraProjectId;

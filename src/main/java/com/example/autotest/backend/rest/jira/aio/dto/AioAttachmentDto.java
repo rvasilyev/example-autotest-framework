@@ -2,15 +2,14 @@ package com.example.autotest.backend.rest.jira.aio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class AioAttachmentDto implements Serializable {
+public class AioAttachmentDto {
 
     private Integer id;
     private String name;
     private String storeName;
-    private transient Object storeLocation;
+    private Object storeLocation;
     private String mimeType;
     private Long size;
     private String processedSize;

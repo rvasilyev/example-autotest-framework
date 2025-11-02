@@ -32,7 +32,7 @@ public final class ComponentNameAspect {
     }
 
     @SuppressWarnings("unchecked")
-    public List<RegularWebElement> getComponents(WebElementContainer container) {
+    private List<RegularWebElement> getComponents(WebElementContainer container) {
         List<RegularWebElement> components = new ArrayList<>();
         Class<?> objectClass = container.getClass();
         while (!objectClass.equals(Object.class)) {

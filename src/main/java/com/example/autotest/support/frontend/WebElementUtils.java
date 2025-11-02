@@ -16,7 +16,6 @@ import com.example.autotest.support.ExceptionUtils;
 import com.example.autotest.support.FileUtils;
 
 import java.lang.reflect.Method;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -129,8 +128,7 @@ public final class WebElementUtils {
         if (!elements.isEmpty()) {
             List<T> components = new ArrayList<>();
             for (int i = 0; i < elements.size(); i++) {
-                AbstractMap.SimpleImmutableEntry<By, SelenideElement> entry = new AbstractMap.SimpleImmutableEntry<>(baseLocator, elements.get(i));
-                components.add(componentCreator.apply(entry, i));
+                components.add(componentCreator.apply(Map.entry(baseLocator, elements.get(i)), i));
             }
 
             return components;

@@ -37,7 +37,6 @@ import com.example.autotest.test.TestState;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -159,11 +158,9 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
     private void invokeMasterTests(MethodSelector testSelector, String testName, String testUuid, Method invokedTest) {
         try {
             Set<MethodSelector> masterTests = getMasterTests(testSelector);
-            synchronized (dependencyInfo) {
-                String circularDependency = new CircularDependencyFinder().getCircularDependency(testSelector, dependencyInfo);
-                if (circularDependency != null) {
-                    throw new AutotestException(String.format("Тестовый метод %s содержит циклическую зависимость в стеке вызова:%n%s", testName, circularDependency));
-                }
+            Optional<String> circularDependency = new CircularDependencyFinder().getCircularDependency(testSelector);
+            if (circularDependency.isPresent()) {
+                throw new AutotestException(String.format("Тестовый метод %s содержит циклическую зависимость в стеке вызова:%n%s", testName, circularDependency));
             }
             runMasterTests(masterTests, testName);
             waitForMasterTests(masterTests, testName);
@@ -213,7 +210,7 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
 
         Map<Integer, TestData> invocations = Stream.iterate(1, n -> n + 1)
                 .limit(invocationCnt)
-                .map(n -> new AbstractMap.SimpleImmutableEntry<>(n, new TestData().setState(TestState.SCHEDULED).setResult(TestResult.UNKNOWN)))
+                .map(n -> Map.entry(n, new TestData().setState(TestState.SCHEDULED).setResult(TestResult.UNKNOWN)))
                 .collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
         synchronized (executionInfo) {
             if (!executionInfo.containsKey(invokedTest) && !invocations.isEmpty()) {
@@ -470,7 +467,7 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
     }
 
     @SuppressWarnings("all")
-    private static class TestData {
+    private static final class TestData {
 
         private String name;
         private TestState state;
@@ -543,7 +540,7 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
         }
     }
 
-    private static class CircularDependencyFinder {
+    private static final class CircularDependencyFinder {
 
         // Хранилище текущей проверяемой последовательности узлов (для обнаружения цикла)
         private final Set<MethodSelector> visitingNodes;
@@ -552,7 +549,7 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
         // Хранилище узлов цикла
         private final List<MethodSelector> cycleNodes;
 
-        public CircularDependencyFinder() {
+        private CircularDependencyFinder() {
             visitingNodes = new HashSet<>();
             visitedNodes = new HashSet<>();
             cycleNodes = new ArrayList<>();
@@ -588,16 +585,51 @@ public final class DependentTestExtension implements InvocationInterceptor, Befo
             return false;
         }
 
-        public String getCircularDependency(MethodSelector startNode, Map<MethodSelector, Set<MethodSelector>> graph) {
-            if (hasCycle(startNode, graph)) {
+        public Optional<String> getCircularDependency(MethodSelector startNode) {
+            boolean hasCycle;
+            synchronized (dependencyInfo) {
+                hasCycle = hasCycle(startNode, dependencyInfo);
+            }
+            if (hasCycle) {
                 Collections.reverse(cycleNodes); // Переворачиваем для корректного порядка элементов
-                return cycleNodes
+                String result = cycleNodes
                         .stream()
                         .map(selector -> getFullyQualifiedMethodName(selector.getJavaClass(), selector.getJavaMethod()))
                         .collect(Collectors.joining("->\n"));
+                return Optional.of(result);
+            } else {
+                return Optional.empty();
             }
+        }
 
-            return null;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            CircularDependencyFinder that = (CircularDependencyFinder) o;
+
+            return Objects.equals(visitingNodes, that.visitingNodes)
+                    && Objects.equals(visitedNodes, that.visitedNodes)
+                    && Objects.equals(cycleNodes, that.cycleNodes);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(visitingNodes, visitedNodes, cycleNodes);
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                    "CircularDependencyFinder {%n visitingNodes=%s,%n visitedNodes=%s,%n cycleNodes=%s%n}",
+                    visitingNodes,
+                    visitedNodes,
+                    cycleNodes
+            );
         }
     }
 }

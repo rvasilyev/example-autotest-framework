@@ -74,6 +74,9 @@ public final class JiraService extends AbstractRestService {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
         JiraService that = (JiraService) o;
 
         return issuesController.equals(that.issuesController)
