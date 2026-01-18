@@ -46,6 +46,7 @@ import java.util.function.Consumer;
 
 /**
  * Потокобезопасный менеджер управления веб-драйвером с предоставлением некоторых дополнительных функций.
+ * @see BrowserSettings
  */
 public final class WebDriverUtils {
 

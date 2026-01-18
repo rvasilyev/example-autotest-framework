@@ -19,6 +19,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Логгер для классов, отмеченных {@link org.springframework.cloud.openfeign.FeignClient}, дающий возможность
+ * формировать подробные структурированные отформатированные логи, отсутствующие по умолчанию.
+ */
 public final class PrettyFeignLogger extends Logger {
 
     private final org.slf4j.Logger log;

@@ -24,6 +24,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Расширение для JUnit, позволяющее автоматически создавать и уничтожать веб-драйвер для запускаемого теста в соответствии
+ * с настройками.
+ * @see WebDriverUtils
+ * @see BrowserSettings
+ */
 public final class WebDriverExtension implements BeforeEachCallback, AfterEachCallback {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebDriverExtension.class);

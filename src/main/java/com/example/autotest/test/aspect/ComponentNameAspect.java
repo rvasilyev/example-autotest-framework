@@ -14,9 +14,18 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+/**
+ * Аспект, задающий иерархические имена веб-элементам в контейнере.
+ */
 @Aspect
 public final class ComponentNameAspect {
 
+    /**
+     * Задает иерархические имена веб-элементам в контейнере.
+     * Работает в контексте AspectJ. <b>НЕ ПРЕДНАЗНАЧЕН ДЛЯ ПРЯМОГО ВЫЗОВА!</b>
+     * @see WebElementContainer
+     */
+    @SuppressWarnings("unused")
     @AfterReturning(pointcut = "call(com.example.autotest.frontend.element.container.WebElementContainer+.new(..))", returning = "container")
     public void updateComponentNames(WebElementContainer container) {
         setComponentNames(container, getComponents(container));

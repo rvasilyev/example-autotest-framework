@@ -42,6 +42,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Расширение для JUnit, позволяющее генерировать тест-кейсы из кода тестов в Jira AIO или изменять уже существующие в соответствии
+ * с настройками. Информация и данные берутся из аннотаций {@link AioData} и {@link com.example.autotest.test.annotation.AioStep}.
+ * @see AioStepAspect
+ * @see JiraSettings
+ */
 @Component
 @Lazy
 public final class AioExtension implements AfterTestExecutionCallback {
@@ -78,7 +84,7 @@ public final class AioExtension implements AfterTestExecutionCallback {
                 String testCaseId = getTestCaseId(jiraProjectId, testName);
 
                 if (testCaseId.isEmpty() || (JiraSettings.FORCE_AIO_CASE_CREATION && !createdTestCases.contains(testName))) {
-                    AioTestCaseDetailDto detail = getDetail(context, aioDataAnnotation, projectKey, jiraProjectId, testName);
+                    AioTestCaseDetailDto detail = getDetail(context, aioDataAnnotation, jiraProjectId, testName);
                     List<AioStepDto> steps = getSteps();
 
                     AioTestCaseDto aioTestCaseDto = new AioTestCaseDto().setJiraProjectId(Integer.valueOf(jiraProjectId))
@@ -128,14 +134,14 @@ public final class AioExtension implements AfterTestExecutionCallback {
         return steps;
     }
 
-    private AioTestCaseDetailDto getDetail(ExtensionContext context, AioData aioDataAnnotation, String projectKey, String jiraProjectId, String testName) {
+    private AioTestCaseDetailDto getDetail(ExtensionContext context, AioData aioDataAnnotation, String jiraProjectId, String testName) {
         AioService.ConfigurationController aioConfigurationController = aioService.getConfigurationController();
         AioConfigurationDto aioConfiguration = RestUtils.checkResponseAndGetBody(aioConfigurationController.getProjectConfig(jiraProjectId));
 
         return new AioTestCaseDetailDto().setAutomationKey(getAutomationKey(context))
                 .setTitle(testName)
                 .setDescription(getDescription(context))
-                .setAutomationOwnerId(getAutomationOwnerId(projectKey, context))
+                .setAutomationOwnerId(getAutomationOwnerId(aioDataAnnotation.projectKey(), context))
                 .setFolder(getFolder(aioDataAnnotation))
                 .setTags(getTags(context, jiraProjectId, aioConfigurationController))
                 .setTestAutomationStatusId(getTestAutomationStatusId(aioDataAnnotation, aioConfiguration))

@@ -48,6 +48,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Аспект, накапливающий данные для шагов тест-кейсов Jira AIO. Поддерживает многопоточную работу.
+ */
 @Aspect
 public final class AioStepAspect {
 
@@ -58,18 +61,32 @@ public final class AioStepAspect {
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+    /**
+     * Создает новое хранилище для накопления данных шагов тест-кейсов Jira AIO.
+     */
     public static void initContext() {
         STEPS.set(new ArrayList<>());
     }
 
+    /**
+     * Удаляет хранилище с накопленными данными шагов тест-кейсов Jira AIO.
+     */
     public static void clearContext() {
         STEPS.remove();
     }
 
+    /**
+     * Возвращает неизменяемую копию хранилища с данными шагов тест-кейсов Jira AIO.
+     * @return неизменяемая копия хранилища с данными шагов тест-кейсов Jira AIO
+     */
     public static List<AioStepDto> getSteps() {
         return Collections.unmodifiableList(STEPS.get());
     }
 
+    /**
+     * Заносит данные шага тест-кейса Jira AIO в хранилище. Данные беруться из методов, аннотированных {@link AioStep}.
+     * Работает в контексте AspectJ. <b>НЕ ПРЕДНАЗНАЧЕН ДЛЯ ПРЯМОГО ВЫЗОВА!</b>
+     */
     @SuppressWarnings("unused")
     @Before("call(* *(..)) && @annotation(com.example.autotest.test.annotation.AioStep)")
     public void createAioStep(JoinPoint joinPoint) {
